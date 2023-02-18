@@ -5,7 +5,7 @@ possible with using proxy and set/get callbacks. Everytime you mutate the
 object, it writes to file with given path. For initialization, file should
 contain valid JSON string accroding to schema. Supports deep nested objects.
 
-Implemeted for Deno, but could be adapted for ny engine.
+Implemeted for Deno, but could be adapted for any engine.
 
 ### Example
 
