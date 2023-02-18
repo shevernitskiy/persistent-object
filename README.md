@@ -5,7 +5,9 @@ possible with using proxy and set/get callbacks. Everytime you mutate the
 object, it writes to file with given path. For initialization, file should
 contain valid JSON string accroding to schema. Supports deep nested objects.
 
-Implemeted for Deno, but could be adopted for ny engine.
+Implemeted for Deno, but could be adapted for ny engine.
+
+### Example
 
 ```ts
 import { persistent } from "https://raw.githubusercontent.com/shevernitskiy/persistent/mod.ts";
