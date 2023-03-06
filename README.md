@@ -10,7 +10,7 @@ Implemeted for Deno, but could be adapted for any engine.
 ### Example
 
 ```ts
-import { persistent } from "https://raw.githubusercontent.com/shevernitskiy/persistent/mod.ts";
+import { persistent } from "https://raw.githubusercontent.com/shevernitskiy/persistent-object/main/mod.ts";
 
 const path = "./test/object.json" as const;
 
