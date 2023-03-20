@@ -12,8 +12,6 @@ Implemeted for Deno, but could be adapted for any engine.
 ```ts
 import { persistent } from "https://raw.githubusercontent.com/shevernitskiy/persistent-object/main/mod.ts";
 
-const path = "./test/object.json" as const;
-
 type Schema = {
   name: string;
   age: number;
@@ -22,15 +20,15 @@ type Schema = {
   };
 };
 
-const state = persistent<Schema>(path,
-      name: "",
-      age: 0,
-      job: {
-        salary: 0,
-      },
-    }); // read json from path and return proxyfied object
+const state = persistent<Schema>("./state.json", {
+  name: "",
+  age: 0,
+  job: {
+    salary: 0,
+  },
+}); // read json from path and return proxyfied object
 
-state.age = 35; // saved to file!
+state.job.salary = 35; // saved to file!
 ```
 
 ### Contribution
