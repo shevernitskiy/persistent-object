@@ -2,8 +2,8 @@
 
 This tiny function provide persistences for json serializable object. It's
 possible with using proxy and set/get callbacks. Everytime you mutate the
-object, it writes to file with given path. For initialization, file should
-contain valid JSON string accroding to schema. Supports deep nested objects.
+object, it writes to file with given path. If file not exists, it will be
+created. Default value needed for deep nesting support.
 
 Implemeted for Deno, but could be adapted for any engine.
 
@@ -22,7 +22,13 @@ type Schema = {
   };
 };
 
-const state = persistent<Schema>(path); // read json from path and return proxyfied object
+const state = persistent<Schema>(path,
+      name: "",
+      age: 0,
+      job: {
+        salary: 0,
+      },
+    }); // read json from path and return proxyfied object
 
 state.age = 35; // saved to file!
 ```

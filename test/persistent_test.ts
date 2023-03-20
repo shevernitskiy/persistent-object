@@ -26,7 +26,13 @@ Deno.test(
       }),
     );
 
-    const state = persistent<ObjectSchema>(path);
+    const state = persistent<ObjectSchema>(path, {
+      name: "",
+      age: 0,
+      job: {
+        salary: 0,
+      },
+    });
     state.age = 35;
     state.job.salary = 2500;
 

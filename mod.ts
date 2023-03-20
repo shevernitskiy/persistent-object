@@ -1,7 +1,14 @@
 // deno-lint-ignore-file ban-types no-explicit-any
 
-export function persistent<T extends object>(path: string): T {
-  const store = JSON.parse(Deno.readTextFileSync(path)) as T;
+export function persistent<T extends object>(path: string, defaults: T): T {
+  let data = defaults;
+  try {
+    data = JSON.parse(Deno.readTextFileSync(path)) satisfies T;
+  } catch (err) {
+    if ((err as Error).message.includes("os error 2")) Deno.createSync(path);
+    data = defaults;
+  }
+  const store = { ...defaults, ...data };
 
   const handler = {
     get(target: object, key: string | symbol) {
