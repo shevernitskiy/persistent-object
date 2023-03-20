@@ -34,7 +34,7 @@ state.job.salary = 35; // saved to file!
 ### Contribution
 
 Pull request, issues and feedback are very welcome. Code style is formatted with
-`deno fmt` and commit messages are done following Conventional Commits spec.
+`deno fmt`.
 
 ### Licence
 
