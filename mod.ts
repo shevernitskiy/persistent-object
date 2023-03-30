@@ -1,7 +1,7 @@
 // deno-lint-ignore-file ban-types no-explicit-any
 
 export function persistent<T extends object>(path: string, defaults: T): T {
-  let data = defaults;
+  let data: T;
   try {
     data = JSON.parse(Deno.readTextFileSync(path)) satisfies T;
   } catch (err) {
