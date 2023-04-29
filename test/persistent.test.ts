@@ -15,23 +15,28 @@ const path = "./test/object.json" as const;
 Deno.test(
   "persistent test",
   () => {
-    Deno.writeTextFileSync(
-      path,
-      JSON.stringify({
-        name: "John",
-        age: 22,
-        job: {
-          salary: 1000,
-        },
-      }),
-    );
-
-    const state = persistent<ObjectSchema>(path, {
-      name: "",
+    const defaults: ObjectSchema = {
+      name: "John",
       age: 0,
       job: {
         salary: 0,
       },
+    };
+
+    Deno.writeTextFileSync(path, JSON.stringify(defaults));
+
+    const state = persistent<ObjectSchema>(defaults, {
+      read: () => {
+        let data: ObjectSchema = defaults;
+        try {
+          data = JSON.parse(Deno.readTextFileSync(path));
+        } catch {
+          //
+        }
+        return data;
+      },
+      save: (value: ObjectSchema) =>
+        Deno.writeTextFileSync(path, JSON.stringify(value, null, 2)),
     });
     state.age = 35;
     state.job.salary = 2500;
