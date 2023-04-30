@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outDir": "./npm",
+    "declaration": true
+  },
+  "include": ["./mod.ts"],
+  "deno2node": {}
+}

@@ -9,5 +9,8 @@
   },
   "fmt": {
     "lineWidth": 120
+  },
+  "tasks": {
+    "npm": "deno run -A ./scripts/build-npm.ts"
   }
 }
