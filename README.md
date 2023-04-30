@@ -9,7 +9,7 @@ support.
 Example with storage in simple json file.
 
 ```ts
-import { persistent } from "https://deno.land/x/persistent@v1.1.0/mod.ts";
+import { persistent } from "https://deno.land/x/persistent@v1.2.0/mod.ts";
 
 type Schema = {
   name: string;
