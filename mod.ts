@@ -1,13 +1,13 @@
 // deno-lint-ignore-file ban-types no-explicit-any
 
-export function persistent<T extends object>(
+export async function persistent<T extends object>(
   defaults: T,
   callbacks: {
-    read: () => T;
+    read: () => Promise<T> | T;
     save: (value: T) => void;
   },
-): T {
-  const store = { ...defaults, ...callbacks.read() };
+): Promise<T> {
+  const store = mergeDeep(defaults, await callbacks.read());
 
   const handler = {
     get(target: object, key: string | symbol) {
@@ -15,7 +15,7 @@ export function persistent<T extends object>(
       const prop = target[key];
       if (typeof prop == "undefined") return;
       if (!prop.isProxy && typeof prop === "object") {
-        target[key] = new Proxy(prop, handler);
+        return new Proxy(prop, handler);
       }
       return target[key];
     },
@@ -27,4 +27,26 @@ export function persistent<T extends object>(
   };
 
   return new Proxy<T>(store, handler);
+}
+
+function mergeDeep(target: object, ...sources: object[]) {
+  if (!sources.length) return target;
+  const source = sources.shift();
+
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        mergeDeep(target[key], source[key]);
+      } else {
+        Object.assign(target, { [key]: source[key] });
+      }
+    }
+  }
+
+  return mergeDeep(target, ...sources);
+}
+
+function isObject(item?: object) {
+  return (item && typeof item === "object" && !Array.isArray(item));
 }
